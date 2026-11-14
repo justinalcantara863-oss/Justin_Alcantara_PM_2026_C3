@@ -90,6 +90,25 @@ void insertarCadena(const char texto[], const char inserto[],
     subcadena(texto, inicio, longitud - inicio,
               resultado + inicio + longitudInserto);
 }
+void reemplazarPrimeraAparicion(const char texto[], const char buscado[],
+                                const char reemplazo[], char resultado[]) {
+    size_t longitudTexto = strlen(texto);
+    const char *encontrado = strstr(texto, buscado);
+
+    if (encontrado == NULL || buscado[0] == '\0') {
+        subcadena(texto, 0, longitudTexto, resultado);
+        return;
+    }
+
+    size_t inicio = (size_t)(encontrado - texto);
+    size_t fin = inicio + strlen(buscado);
+    size_t longitudReemplazo = strlen(reemplazo);
+
+    subcadena(texto, 0, inicio, resultado);
+    subcadena(reemplazo, 0, longitudReemplazo, resultado + inicio);
+    subcadena(texto, fin, longitudTexto - fin,
+              resultado + inicio + longitudReemplazo);
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -109,5 +128,7 @@ int main(void) {
     printf("Sin la primera aparicion: [%s]\n", resultado);
         insertarCadena("ABEF", "CD", 3, resultado);
     printf("Despues de insertar: [%s]\n", resultado);
+        reemplazarPrimeraAparicion("sol y sol", "sol", "luna", resultado);
+    printf("Despues de reemplazar: [%s]\n", resultado);
     return 0;
 }
