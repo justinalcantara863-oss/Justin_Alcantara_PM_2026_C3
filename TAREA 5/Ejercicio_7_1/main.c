@@ -61,6 +61,18 @@ void borrarDesde(const char texto[], size_t posicion, size_t cantidad,
     subcadena(texto, inicio + cantidad, longitud - inicio - cantidad,
               resultado + inicio);
 }
+void borrarPrimeraAparicion(const char texto[], const char buscado[],
+                           char resultado[]) {
+    const char *encontrado = strstr(texto, buscado);
+
+    if (encontrado == NULL || buscado[0] == '\0') {
+        subcadena(texto, 0, strlen(texto), resultado);
+        return;
+    }
+
+    size_t posicion = (size_t)(encontrado - texto) + 1;
+    borrarDesde(texto, posicion, strlen(buscado), resultado);
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -76,5 +88,7 @@ int main(void) {
     printf("Sin espacios al principio: [%s]\n", resultado);
         borrarDesde("ABCDEF", 3, 2, resultado);
     printf("Despues de borrar: [%s]\n", resultado);
+        borrarPrimeraAparicion("sol y sol", "sol", resultado);
+    printf("Sin la primera aparicion: [%s]\n", resultado);
     return 0;
 }
