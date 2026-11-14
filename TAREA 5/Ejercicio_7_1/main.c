@@ -109,6 +109,22 @@ void reemplazarPrimeraAparicion(const char texto[], const char buscado[],
     subcadena(texto, fin, longitudTexto - fin,
               resultado + inicio + longitudReemplazo);
 }
+size_t contarApariciones(const char texto[], const char buscado[]) {
+    if (buscado[0] == '\0') {
+        return 0;
+    }
+
+    size_t cantidad = 0;
+    const char *inicio = texto;
+    const char *encontrado;
+
+    while ((encontrado = strstr(inicio, buscado)) != NULL) {
+        cantidad++;
+        inicio = encontrado + 1;
+    }
+
+    return cantidad;
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -130,5 +146,7 @@ int main(void) {
     printf("Despues de insertar: [%s]\n", resultado);
         reemplazarPrimeraAparicion("sol y sol", "sol", "luna", resultado);
     printf("Despues de reemplazar: [%s]\n", resultado);
+    size_t apariciones = contarApariciones("banana", "ana");
+    printf("Apariciones de ana: %zu\n", apariciones);
     return 0;
 }
