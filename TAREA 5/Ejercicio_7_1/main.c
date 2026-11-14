@@ -24,7 +24,15 @@ void ultimos(const char texto[], size_t n, char resultado[]) {
     }
     subcadena(texto, longitud - n, n, resultado);
 }
+void quitarEspaciosFinal(const char texto[], char resultado[]) {
+    size_t longitud = strlen(texto);
 
+    while (longitud > 0 && texto[longitud - 1] == ' ') {
+        longitud--;
+    }
+
+    subcadena(texto, 0, longitud, resultado);
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -34,6 +42,7 @@ int main(void) {
 
     ultimos(texto, 4, resultado);
     printf("Ultimos: %s\n", resultado);
-
+    quitarEspaciosFinal("Meca   ", resultado);
+    printf("Sin espacios al final: [%s]\n", resultado);
     return 0;
 }
