@@ -73,6 +73,23 @@ void borrarPrimeraAparicion(const char texto[], const char buscado[],
     size_t posicion = (size_t)(encontrado - texto) + 1;
     borrarDesde(texto, posicion, strlen(buscado), resultado);
 }
+void insertarCadena(const char texto[], const char inserto[],
+                    size_t posicion, char resultado[]) {
+    size_t longitud = strlen(texto);
+    size_t longitudInserto = strlen(inserto);
+
+    if (posicion == 0 || posicion > longitud + 1) {
+        subcadena(texto, 0, longitud, resultado);
+        return;
+    }
+
+    size_t inicio = posicion - 1;
+
+    subcadena(texto, 0, inicio, resultado);
+    subcadena(inserto, 0, longitudInserto, resultado + inicio);
+    subcadena(texto, inicio, longitud - inicio,
+              resultado + inicio + longitudInserto);
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -90,5 +107,7 @@ int main(void) {
     printf("Despues de borrar: [%s]\n", resultado);
         borrarPrimeraAparicion("sol y sol", "sol", resultado);
     printf("Sin la primera aparicion: [%s]\n", resultado);
+        insertarCadena("ABEF", "CD", 3, resultado);
+    printf("Despues de insertar: [%s]\n", resultado);
     return 0;
 }
