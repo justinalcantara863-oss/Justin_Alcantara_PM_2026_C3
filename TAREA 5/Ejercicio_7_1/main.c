@@ -43,6 +43,24 @@ void quitarEspaciosInicio(const char texto[], char resultado[]) {
 
     subcadena(texto, inicio, longitud - inicio, resultado);
 }
+void borrarDesde(const char texto[], size_t posicion, size_t cantidad,
+                 char resultado[]) {
+    size_t longitud = strlen(texto);
+
+    if (posicion == 0 || posicion > longitud) {
+        subcadena(texto, 0, longitud, resultado);
+        return;
+    }
+
+    size_t inicio = posicion - 1;
+    if (cantidad > longitud - inicio) {
+        cantidad = longitud - inicio;
+    }
+
+    subcadena(texto, 0, inicio, resultado);
+    subcadena(texto, inicio + cantidad, longitud - inicio - cantidad,
+              resultado + inicio);
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -56,5 +74,7 @@ int main(void) {
     printf("Sin espacios al final: [%s]\n", resultado);
         quitarEspaciosInicio("   Meca", resultado);
     printf("Sin espacios al principio: [%s]\n", resultado);
+        borrarDesde("ABCDEF", 3, 2, resultado);
+    printf("Despues de borrar: [%s]\n", resultado);
     return 0;
 }
