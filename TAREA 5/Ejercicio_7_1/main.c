@@ -33,6 +33,16 @@ void quitarEspaciosFinal(const char texto[], char resultado[]) {
 
     subcadena(texto, 0, longitud, resultado);
 }
+void quitarEspaciosInicio(const char texto[], char resultado[]) {
+    size_t longitud = strlen(texto);
+    size_t inicio = 0;
+
+    while (inicio < longitud && texto[inicio] == ' ') {
+        inicio++;
+    }
+
+    subcadena(texto, inicio, longitud - inicio, resultado);
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -44,5 +54,7 @@ int main(void) {
     printf("Ultimos: %s\n", resultado);
     quitarEspaciosFinal("Meca   ", resultado);
     printf("Sin espacios al final: [%s]\n", resultado);
+        quitarEspaciosInicio("   Meca", resultado);
+    printf("Sin espacios al principio: [%s]\n", resultado);
     return 0;
 }
