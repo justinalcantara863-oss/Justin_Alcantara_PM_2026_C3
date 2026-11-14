@@ -147,6 +147,32 @@ void borrarTodasLasApariciones(const char texto[], const char buscado[],
 
     subcadena(inicio, 0, strlen(inicio), resultado + escritos);
 }
+void reemplazarTodasLasApariciones(const char texto[], const char buscado[],
+                                  const char reemplazo[], char resultado[]) {
+    size_t longitudBuscado = strlen(buscado);
+
+    if (longitudBuscado == 0) {
+        subcadena(texto, 0, strlen(texto), resultado);
+        return;
+    }
+
+    size_t longitudReemplazo = strlen(reemplazo);
+    const char *inicio = texto;
+    const char *encontrado;
+    size_t escritos = 0;
+
+    while ((encontrado = strstr(inicio, buscado)) != NULL) {
+        size_t cantidad = (size_t)(encontrado - inicio);
+        subcadena(inicio, 0, cantidad, resultado + escritos);
+        escritos += cantidad;
+
+        subcadena(reemplazo, 0, longitudReemplazo, resultado + escritos);
+        escritos += longitudReemplazo;
+        inicio = encontrado + longitudBuscado;
+    }
+
+    subcadena(inicio, 0, strlen(inicio), resultado + escritos);
+}
 int main(void) {
     const char texto[] = "Mecatronica";
     char resultado[sizeof texto];
@@ -172,5 +198,7 @@ int main(void) {
     printf("Apariciones de ana: %zu\n", apariciones);
         borrarTodasLasApariciones("sol-luna-sol", "sol", resultado);
     printf("Despues de borrar todas: [%s]\n", resultado);
+        reemplazarTodasLasApariciones("sol-sol", "sol", "luna", resultado);
+    printf("Despues de reemplazar todas: [%s]\n", resultado);
     return 0;
 }
